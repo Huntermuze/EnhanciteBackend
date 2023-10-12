@@ -33,4 +33,14 @@ public class DataStreamController {
     public ResponseEntity<Object> getAllT1HistoryOfPatient(@PathVariable("patientId") long patientId) {
         return ResponseEntity.ok(dataStreamService.getAllT1HistoryOfPatient(patientId));
     }
+
+    @GetMapping("/bi/latest/{patientId}")
+    public ResponseEntity<Object> getLatestBIOfPatient(@PathVariable("patientId") long patientId) {
+        return ResponseEntity.ok(dataStreamService.getLatestBIOfPatient(patientId));
+    }
+
+    @GetMapping("/bi/all/{patientId}")
+    public ResponseEntity<Object> getAllBIHistoryOfPatient(@PathVariable("patientId") long patientId) {
+        return ResponseEntity.ok(dataStreamService.getAllBIHistoryOfPatient(patientId));
+    }
 }
