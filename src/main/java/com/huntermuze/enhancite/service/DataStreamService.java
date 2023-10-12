@@ -1,7 +1,9 @@
 package com.huntermuze.enhancite.service;
 
 import com.huntermuze.enhancite.dto.HeartRate;
+import com.huntermuze.enhancite.dto.HeartRateVariability;
 import com.huntermuze.enhancite.dto.Temperature;
+import com.huntermuze.enhancite.dto.container.HeartRateVariabilities;
 import com.huntermuze.enhancite.dto.container.HeartRates;
 import com.huntermuze.enhancite.dto.container.Temperatures;
 import com.huntermuze.enhancite.exception.NoDataFoundException;
@@ -17,4 +19,8 @@ public interface DataStreamService {
     Temperature getLatestT1OfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
 
     Temperatures getAllT1HistoryOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
+
+    HeartRateVariabilities getAllBIHistoryOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
+
+    HeartRateVariability getLatestBIOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
 }
