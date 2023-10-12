@@ -1,12 +1,15 @@
 package com.huntermuze.enhancite.service;
 
 import com.huntermuze.enhancite.dto.HeartRate;
+import com.huntermuze.enhancite.dto.HeartRateVariability;
 import com.huntermuze.enhancite.dto.Temperature;
+import com.huntermuze.enhancite.dto.container.HeartRateVariabilities;
 import com.huntermuze.enhancite.dto.container.HeartRates;
 import com.huntermuze.enhancite.dto.container.Temperatures;
 import com.huntermuze.enhancite.exception.NoDataFoundException;
 import com.huntermuze.enhancite.exception.UserNotFoundException;
 import com.huntermuze.enhancite.repository.HeartRateRepository;
+import com.huntermuze.enhancite.repository.HeartRateVariabilityRepository;
 import com.huntermuze.enhancite.repository.PatientRepository;
 import com.huntermuze.enhancite.repository.TemperatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class DataStreamServiceImpl implements DataStreamService {
     HeartRateRepository heartRateRepository;
     @Autowired
     TemperatureRepository temperatureRepository;
+    @Autowired
+    HeartRateVariabilityRepository heartRateVariabilityRepository;
 
     @Override
     public HeartRate getLatestHROfPatient(long patientId) throws UserNotFoundException, NoDataFoundException {
@@ -77,5 +82,33 @@ public class DataStreamServiceImpl implements DataStreamService {
         }
 
         return new Temperatures(temps);
+    }
+
+    @Override
+    public HeartRateVariability getLatestBIOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException {
+        var patient = heartRateVariabilityRepository.findById(patientId);
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("Patient with id " + patientId + " does not exist!");
+        }
+        var bi = heartRateVariabilityRepository.findLatestHeartRateVariabilityOfPatient(patientId);
+        if (bi.isEmpty()) {
+            throw new NoDataFoundException("No heart rate variability data has been uploaded for patient with id " + patientId + "!");
+        }
+
+        return bi.get();
+    }
+
+    @Override
+    public HeartRateVariabilities getAllBIHistoryOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException {
+        var patient = heartRateVariabilityRepository.findById(patientId);
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("Patient with id " + patientId + " does not exist!");
+        }
+        List<HeartRateVariability> bis = heartRateVariabilityRepository.findAllHeartRateVariabilityHistoryOfPatient(patientId);
+        if (bis.isEmpty()) {
+            throw new NoDataFoundException("No heart rate variability data has been uploaded for patient with id " + patientId + "!");
+        }
+
+        return new HeartRateVariabilities(bis);
     }
 }
