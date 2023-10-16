@@ -41,4 +41,15 @@ public class PatientServiceImpl implements PatientService {
         return clinician;
     }
 
+    @Override
+    public Patient getPatientAssociatedWithEmotibit(String emotibitId) throws UserNotFoundException {
+        var patient = patientRepository.findByEmotibitId(emotibitId);
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("Patient with emotibit id " + emotibitId + " does not exist!");
+        }
+        Patient p = patient.get();
+        p.setPassword("");
+        return p;
+    }
+
 }

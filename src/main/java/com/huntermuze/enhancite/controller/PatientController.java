@@ -19,6 +19,11 @@ public class PatientController {
         return ResponseEntity.ok(patientService.getAllPatients());
     }
 
+    @GetMapping("/{emotibitId}")
+    public ResponseEntity<Object> getPatientAssociatedWithEmotibit(@PathVariable("emotibitId") String emotibitId) {
+        return ResponseEntity.ok(patientService.getPatientAssociatedWithEmotibit(emotibitId));
+    }
+
     @GetMapping("/{patientId}/clinician")
     public ResponseEntity<Object> getClinicianOfPatient(@PathVariable("patientId") long patientId) {
         return ResponseEntity.ok(patientService.getClinicianOfPatient(patientId));
