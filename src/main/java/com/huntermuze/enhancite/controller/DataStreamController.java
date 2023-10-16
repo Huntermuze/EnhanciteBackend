@@ -1,18 +1,41 @@
 package com.huntermuze.enhancite.controller;
 
+import com.huntermuze.enhancite.dto.HeartRate;
+import com.huntermuze.enhancite.dto.HeartRateVariability;
+import com.huntermuze.enhancite.dto.Temperature;
 import com.huntermuze.enhancite.service.DataStreamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/datastream")
 public class DataStreamController {
     @Autowired
     DataStreamService dataStreamService;
+
+    @PostMapping(path = "/hr", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> addHeartRate(@RequestBody HeartRate heartRate) {
+        dataStreamService.saveHeartRate(heartRate);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(path = "/t1", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> addTemperature(@RequestBody Temperature temperature) {
+        dataStreamService.saveTemperature(temperature);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PostMapping(path = "/bi", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> addHeartRateVariability(@RequestBody HeartRateVariability heartRateVariability) {
+        dataStreamService.saveHeartRateVariability(heartRateVariability);
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("/hr/latest/{patientId}")
     public ResponseEntity<Object> getLatestHROfPatient(@PathVariable("patientId") long patientId) {

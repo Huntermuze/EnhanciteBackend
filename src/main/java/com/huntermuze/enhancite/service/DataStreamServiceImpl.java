@@ -15,6 +15,8 @@ import com.huntermuze.enhancite.repository.TemperatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -110,5 +112,23 @@ public class DataStreamServiceImpl implements DataStreamService {
         }
 
         return new HeartRateVariabilities(bis);
+    }
+
+    @Override
+    public void saveHeartRate(HeartRate heartRate) {
+        heartRate.setDateTimeRecorded(Date.from(Instant.now()));
+        heartRateRepository.save(heartRate);
+    }
+
+    @Override
+    public void saveTemperature(Temperature temperature) {
+        temperature.setDateTimeRecorded(Date.from(Instant.now()));
+        temperatureRepository.save(temperature);
+    }
+
+    @Override
+    public void saveHeartRateVariability(HeartRateVariability heartRateVariability) {
+        heartRateVariability.setDateTimeRecorded(Date.from(Instant.now()));
+        heartRateVariabilityRepository.save(heartRateVariability);
     }
 }

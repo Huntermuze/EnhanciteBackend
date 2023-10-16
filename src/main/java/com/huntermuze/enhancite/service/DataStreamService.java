@@ -10,6 +10,9 @@ import com.huntermuze.enhancite.exception.NoDataFoundException;
 import com.huntermuze.enhancite.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
+
 @Service
 public interface DataStreamService {
     HeartRate getLatestHROfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
@@ -23,4 +26,10 @@ public interface DataStreamService {
     HeartRateVariabilities getAllBIHistoryOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
 
     HeartRateVariability getLatestBIOfPatient(long patientId) throws UserNotFoundException, NoDataFoundException;
+
+    void saveHeartRate(HeartRate heartRate);
+    
+    void saveTemperature(Temperature temperature);
+
+    void saveHeartRateVariability(HeartRateVariability heartRateVariability);
 }
