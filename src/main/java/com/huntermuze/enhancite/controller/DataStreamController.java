@@ -29,13 +29,11 @@ public class DataStreamController {
         return ResponseEntity.ok().build();
     }
 
-
     @PostMapping(path = "/bi", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> addHeartRateVariability(@RequestBody HeartRateVariability heartRateVariability) {
         dataStreamService.saveHeartRateVariability(heartRateVariability);
         return ResponseEntity.ok().build();
     }
-
 
     @GetMapping("/hr/latest/{patientId}")
     public ResponseEntity<Object> getLatestHROfPatient(@PathVariable("patientId") long patientId) {
