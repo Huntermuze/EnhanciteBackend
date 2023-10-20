@@ -11,4 +11,5 @@ public interface PatientService {
     Patients getAllPatients();
     Clinician getClinicianOfPatient(long patientId) throws UserNotFoundException;
     Patient getPatientAssociatedWithEmotibit(String emotibitId) throws UserNotFoundException;
+    void removePatient(long patientId) throws UserNotFoundException;
 }

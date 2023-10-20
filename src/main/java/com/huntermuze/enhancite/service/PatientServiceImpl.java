@@ -52,4 +52,12 @@ public class PatientServiceImpl implements PatientService {
         return p;
     }
 
+    @Override
+    public void removePatient(long patientId) throws UserNotFoundException {
+        var patient = patientRepository.findById(patientId);
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("Patient with id " + patientId + " does not exist!");
+        }
+        patientRepository.deleteById(patientId);
+    }
 }
